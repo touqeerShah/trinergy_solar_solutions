@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 const navItems = [
   { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "Gallery", href: "#gallery" },
   { label: "Team", href: "#team" },
@@ -30,7 +31,6 @@ const services = [
 ];
 
 const aboutHighlights = [
-
   {
     badge: "QF",
     title: "Quality First",
@@ -54,12 +54,6 @@ const aboutHighlights = [
     description: "Systems planned for dependable output and long-term savings.",
     metric: true,
     accent: "green",
-  },
-  {
-    value: "Why Trinergy",
-    title: "Precision, reach, and proven solar performance. Rate",
-    description: "Key strengths, shown in one compact mobile card.",
-    metric: true,
   },
 ];
 
@@ -107,6 +101,7 @@ const teamHighlights = [
 ];
 
 const quickLinks = [
+  { label: "About Us", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "Project Portfolio", href: "#gallery" },
   { label: "Our Expertise", href: "#team" },
@@ -123,6 +118,7 @@ const socials = [
     href: "https://www.linkedin.com/company/trinergy-solar-solutions/about/",
   },
 ];
+
 const formSubmitEmail = "touqeershah32@gmail.com";
 
 function App() {
@@ -209,6 +205,31 @@ function App() {
     }, 4200);
 
     return () => window.clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const panels = document.querySelectorAll(".stack-section");
+
+    if (!panels.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-stack-active");
+          } else {
+            entry.target.classList.remove("is-stack-active");
+          }
+        });
+      },
+      {
+        threshold: 0.45,
+      },
+    );
+
+    panels.forEach((panel) => observer.observe(panel));
+
+    return () => observer.disconnect();
   }, []);
 
   async function handleSubmit(event) {
@@ -335,52 +356,55 @@ function App() {
           </div>
         </section>
 
-        <section className="section section-light" id="about">
-          <div className="container about-grid">
-            <div className="about-visual" data-reveal="left">
-              <img
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC44OBPimPlj32VY3RfD5U_y6exvoUJF2uYCkajASye0JLrSvh5SE5RGACiNC9ArjOvVzE4sLkWEopL44ZQtpZTYuovOy5QP1HJ2Cl81p0FsputklUYV98vH60ZqhDBuid2ui1QnXHSQ9UiHoPtOu7sxYOdVDoqelZyQs70ds5on6adMjWZgOZ_R7DEgmeluX37pwj3c5BmfaBuU0ZmoNUB18Fdtf3O7DbR_C6TFyf0bEvE_oMd4RruQsND_CTMcIB6X93mJgsGtdDL"
-                alt="Modern rooftop solar panel installation in Karachi"
-              />
-              <div className="about-badge">
-                <strong>Est. 2022</strong>
-                <span>Leading Energy Partner</span>
+        <div className="stack-sequence">
+          <section className="section section-light stack-section stack-section-about" id="about">
+            <div className="container about-grid about-grid-no-visual stack-card stack-card-about">
+              <div className="about-copy" data-reveal="right">
+                <span className="section-label">About Us</span>
+                <h2>The Future of Power in Karachi</h2>
+                <p>
+                  Trinergy Solar Solutions specializes in solar trading, installation, and expert
+                  energy services. Founded in 2022, the company helps clients transition to cleaner
+                  power with a mission to reduce energy dependency.
+                </p>
+                <p>
+                  We combine practical engineering, fast sourcing, and installation discipline to
+                  deliver solar systems that feel dependable from planning to long-term support.
+                </p>
+
+                <div className="about-badge about-badge-inline">
+                  <strong>Est. 2022</strong>
+                  <span>Leading Energy Partner</span>
+                </div>
+
+                <div
+                  className="about-desktop-metrics"
+                  data-reveal="up"
+                  style={{ "--reveal-delay": "100ms" }}
+                >
+                  <article className="about-desktop-metric-card">
+                    <strong>500+</strong>
+                    <span>Homes Powered</span>
+                  </article>
+                  <article className="about-desktop-metric-card about-desktop-metric-card-green">
+                    <strong>98%</strong>
+                    <span>Efficiency Rate</span>
+                  </article>
+                </div>
               </div>
-            </div>
 
-            <div className="about-copy" data-reveal="right">
-              <span className="section-label">About Us</span>
-              <h2>The Future of Power in Karachi</h2>
-              <p>
-                Trinergy Solar Solutions specializes in solar trading, installation, and expert
-                energy services. Founded in 2022, the company helps clients transition to cleaner
-                power with a mission to reduce energy dependency.
-              </p>
-              <p>
-                We combine practical engineering, fast sourcing, and installation discipline to
-                deliver solar systems that feel dependable from planning to long-term support.
-              </p>
-
-              <div className="about-desktop-metrics" data-reveal="up" style={{ "--reveal-delay": "100ms" }}>
-                <article className="about-desktop-metric-card">
-                  <strong>500+</strong>
-                  <span>Homes Powered</span>
-                </article>
-                <article className="about-desktop-metric-card about-desktop-metric-card-green">
-                  <strong>98%</strong>
-                  <span>Efficiency Rate</span>
-                </article>
-              </div>
-
-
-            </div>
-                          <div className="about-mobile-atlas" data-reveal="up" style={{ "--reveal-delay": "110ms" }}>
+              <div
+                className="about-mobile-atlas"
+                data-reveal="up"
+                style={{ "--reveal-delay": "110ms" }}
+              >
                 <div className="about-mobile-flip-stack" aria-label="About highlights">
-
                   <article
                     key={`${activeAboutIndex}-${aboutHighlights[activeAboutIndex].title}`}
                     className={`about-mobile-flip-card${
-                      aboutHighlights[activeAboutIndex].metric ? " about-mobile-flip-card-metric" : ""
+                      aboutHighlights[activeAboutIndex].metric
+                        ? " about-mobile-flip-card-metric"
+                        : ""
                     }${aboutHighlights[activeAboutIndex].accent === "green" ? " is-green" : ""}`}
                   >
                     {aboutHighlights[activeAboutIndex].metric ? (
@@ -415,119 +439,136 @@ function App() {
                   </div>
                 </div>
               </div>
-          </div>
-        </section>
-
-        <section className="section section-muted" id="services">
-          <div className="container">
-            <div className="section-heading center" data-reveal="up">
-              <span className="section-label section-label-green">Expertise</span>
-              <h2>Our Core Services</h2>
             </div>
+          </section>
 
-            <div className="cards-grid">
-              {services.map((service, index) => (
-                <article
-                  key={service.title}
-                  className="service-card"
-                  data-reveal="up"
-                  style={{ "--reveal-delay": `${index * 110 + 60}ms` }}
-                >
-                  <div className="service-icon">{service.icon}</div>
-                  <h3>{service.title}</h3>
-                  <p>{service.description}</p>
-                </article>
-              ))}
-            </div>
-
-            <div className="mobile-service-carousel" data-reveal="up" style={{ "--reveal-delay": "180ms" }}>
-              <article className={`mobile-service-card service-theme-${activeServiceIndex}`}>
-                <div className="mobile-service-card-top">
-                  <div className="service-icon">{services[activeServiceIndex].icon}</div>
-                </div>
-                <h3>{services[activeServiceIndex].title}</h3>
-                <p>{services[activeServiceIndex].description}</p>
-              </article>
-
-              <div className="mobile-service-controls">
-                <div className="mobile-service-dots" aria-label="Service position">
-                  {services.map((service, index) => (
-                    <button
-                      key={service.title}
-                      type="button"
-                      className={index === activeServiceIndex ? "is-active" : ""}
-                      onClick={() => setActiveServiceIndex(index)}
-                      aria-label={`Show ${service.title}`}
-                    />
-                  ))}
-                </div>
+          <section
+            className="section section-muted stack-section stack-section-services"
+            id="services"
+          >
+            <div className="container stack-card stack-card-services">
+              <div className="section-heading center" data-reveal="up">
+                <span className="section-label section-label-green">Expertise</span>
+                <h2>Our Core Services</h2>
               </div>
-            </div>
 
-          </div>
-        </section>
-
-        <section className="section section-portfolio" id="gallery">
-          <div className="container">
-            <div className="section-heading split" data-reveal="up">
-              <div>
-                <span className="section-label section-label-warm">Portfolio</span>
-                <h2>Successful Projects</h2>
+              <div className="cards-grid">
+                {services.map((service, index) => (
+                  <article
+                    key={service.title}
+                    className="service-card"
+                    data-reveal="up"
+                    style={{ "--reveal-delay": `${index * 110 + 60}ms` }}
+                  >
+                    <div className="service-icon">{service.icon}</div>
+                    <h3>{service.title}</h3>
+                    <p>{service.description}</p>
+                  </article>
+                ))}
               </div>
-              <p>
-                From residential villas to industrial complexes, Trinergy brings solar efficiency
-                to every roof it touches.
-              </p>
-            </div>
 
-            <div className="project-grid">
-              {projects.map((project, index) => (
-                <article
-                  key={project.title}
-                  className={`project-card${project.featured ? " project-card-featured" : ""}${
-                    project.wide ? " project-card-wide" : ""
-                  }`}
-                  data-reveal="up"
-                  style={{ "--reveal-delay": `${index * 90 + 40}ms` }}
-                >
-                  <img src={project.image} alt={project.title} />
-                  <div className="project-overlay">
-                    <h3>{project.title}</h3>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <div className="mobile-gallery-carousel" data-reveal="up" style={{ "--reveal-delay": "120ms" }}>
-              <button
-                className="mobile-gallery-card"
-                type="button"
-                onClick={showNextProject}
-                aria-label="Show next project"
+              <div
+                className="mobile-service-carousel"
+                data-reveal="up"
+                style={{ "--reveal-delay": "180ms" }}
               >
-                <img src={projects[activeProjectIndex].image} alt={projects[activeProjectIndex].title} />
-                <div className="mobile-gallery-overlay">
-                  <span className="mobile-kicker">Tap For Next</span>
-                  <h3>{projects[activeProjectIndex].title}</h3>
-                </div>
-              </button>
+                <article className={`mobile-service-card service-theme-${activeServiceIndex}`}>
+                  <div className="mobile-service-card-top">
+                    <div className="service-icon">{services[activeServiceIndex].icon}</div>
+                  </div>
+                  <h3>{services[activeServiceIndex].title}</h3>
+                  <p>{services[activeServiceIndex].description}</p>
+                </article>
 
-              <div className="mobile-gallery-controls">
-                <div className="mobile-gallery-dots" aria-label="Gallery position">
-                  {projects.map((project, index) => (
-                    <button
-                      key={project.title}
-                      type="button"
-                      className={index === activeProjectIndex ? "is-active" : ""}
-                      onClick={() => setActiveProjectIndex(index)}
-                      aria-label={`Show ${project.title}`}
-                    />
-                  ))}
+                <div className="mobile-service-controls">
+                  <div className="mobile-service-dots" aria-label="Service position">
+                    {services.map((service, index) => (
+                      <button
+                        key={service.title}
+                        type="button"
+                        className={index === activeServiceIndex ? "is-active" : ""}
+                        onClick={() => setActiveServiceIndex(index)}
+                        aria-label={`Show ${service.title}`}
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+
+          <section
+            className="section section-portfolio stack-section stack-section-gallery"
+            id="gallery"
+          >
+            <div className="container stack-card stack-card-gallery">
+              <div className="section-heading split" data-reveal="up">
+                <div>
+                  <span className="section-label section-label-warm">Portfolio</span>
+                  <h2>Successful Projects</h2>
+                </div>
+                <p>
+                  From residential villas to industrial complexes, Trinergy brings solar
+                  efficiency to every roof it touches.
+                </p>
+              </div>
+
+              <div className="project-grid">
+                {projects.map((project, index) => (
+                  <article
+                    key={project.title}
+                    className={`project-card${project.featured ? " project-card-featured" : ""}${
+                      project.wide ? " project-card-wide" : ""
+                    }`}
+                    data-reveal="up"
+                    style={{ "--reveal-delay": `${index * 90 + 40}ms` }}
+                  >
+                    <img src={project.image} alt={project.title} />
+                    <div className="project-overlay">
+                      <h3>{project.title}</h3>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              <div
+                className="mobile-gallery-carousel"
+                data-reveal="up"
+                style={{ "--reveal-delay": "120ms" }}
+              >
+                <button
+                  className="mobile-gallery-card"
+                  type="button"
+                  onClick={showNextProject}
+                  aria-label="Show next project"
+                >
+                  <img
+                    src={projects[activeProjectIndex].image}
+                    alt={projects[activeProjectIndex].title}
+                  />
+                  <div className="mobile-gallery-overlay">
+                    <span className="mobile-kicker">Tap For Next</span>
+                    <h3>{projects[activeProjectIndex].title}</h3>
+                  </div>
+                </button>
+
+                <div className="mobile-gallery-controls">
+                  <div className="mobile-gallery-dots" aria-label="Gallery position">
+                    {projects.map((project, index) => (
+                      <button
+                        key={project.title}
+                        type="button"
+                        className={index === activeProjectIndex ? "is-active" : ""}
+                        onClick={() => setActiveProjectIndex(index)}
+                        aria-label={`Show ${project.title}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
 
         <section className="section section-dark" id="team">
           <div className="container team-grid">
@@ -541,7 +582,11 @@ function App() {
                 solar energy.
               </p>
 
-              <div className="mobile-team-summary" data-reveal="up" style={{ "--reveal-delay": "70ms" }}>
+              <div
+                className="mobile-team-summary"
+                data-reveal="up"
+                style={{ "--reveal-delay": "70ms" }}
+              >
                 <div className="mobile-team-spotlight">
                   <span className="mobile-kicker">Our Founder</span>
                   <h3>Engineering-led solar growth for Karachi and beyond.</h3>
@@ -632,13 +677,20 @@ function App() {
                 </div>
               </div>
 
-              <div className="mobile-contact-actions" data-reveal="up" style={{ "--reveal-delay": "140ms" }}>
+              <div
+                className="mobile-contact-actions"
+                data-reveal="up"
+                style={{ "--reveal-delay": "140ms" }}
+              >
                 <a className="mobile-contact-card" href="tel:+923339220769">
                   <span className="mobile-contact-card-icon">CL</span>
                   <strong>Direct Line</strong>
                   <span>+92 333 9220769</span>
                 </a>
-                <a className="mobile-contact-card mobile-contact-card-green" href="https://wa.me/923339220769">
+                <a
+                  className="mobile-contact-card mobile-contact-card-green"
+                  href="https://wa.me/923339220769"
+                >
                   <span className="mobile-contact-card-icon">WA</span>
                   <strong>WhatsApp</strong>
                   <span>Chat Now</span>
@@ -651,7 +703,12 @@ function App() {
                 <input type="hidden" name="_subject" value="New Trinergy Solar Inquiry" />
                 <input type="hidden" name="_captcha" value="false" />
                 <input type="hidden" name="_template" value="table" />
-                <input type="hidden" name="_url" value="https://trinergy-solar-solutions.com/#contact" />
+                <input
+                  type="hidden"
+                  name="_url"
+                  value="https://trinergy-solar-solutions.com/#contact"
+                />
+
                 <div className="form-row">
                   <label>
                     <span>Your Name</span>
@@ -689,9 +746,7 @@ function App() {
                   <input type="text" name="_honey" tabIndex="-1" autoComplete="off" />
                 </label>
 
-                <p className={`form-note form-note-${formStatus}`}>
-                  {formMessage}
-                </p>
+                <p className={`form-note form-note-${formStatus}`}>{formMessage}</p>
 
                 <button
                   className="button button-primary button-full"

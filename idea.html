@@ -1,328 +1,189 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stacked Scroll Sections</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Trinergy Solar Solutions | Captured. Harnessed. Empowered.</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style>
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        .tonal-layering-no-borders {
-            box-shadow: none;
-        }
-        .scale-98-on-press:active {
-            transform: scale(0.98);
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fbf9f8;
-            color: #1b1c1c;
-        }
-        h1, h2, h3, .brand-font {
-            font-family: 'Space Grotesk', sans-serif;
-        }
-    </style>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "on-surface-variant": "#564336",
-                        "surface-container-highest": "#e4e2e2",
-                        "on-primary-fixed": "#311300",
-                        "surface-bright": "#fbf9f8",
-                        "surface-variant": "#e4e2e2",
-                        "surface-container-lowest": "#ffffff",
-                        "secondary": "#426900",
-                        "on-tertiary-container": "#303841",
-                        "on-background": "#1b1c1c",
-                        "on-surface": "#1b1c1c",
-                        "tertiary": "#575f69",
-                        "secondary-fixed-dim": "#9dd84f",
-                        "tertiary-container": "#9aa2ac",
-                        "on-secondary-fixed": "#112000",
-                        "outline-variant": "#ddc1b0",
-                        "primary-container": "#f58220",
-                        "on-error": "#ffffff",
-                        "surface-tint": "#964900",
-                        "surface-container-low": "#f5f3f3",
-                        "surface-container-high": "#e9e8e7",
-                        "on-secondary-container": "#467000",
-                        "on-primary": "#ffffff",
-                        "on-primary-fixed-variant": "#723600",
-                        "surface-container": "#efeded",
-                        "on-secondary": "#ffffff",
-                        "on-secondary-fixed-variant": "#304f00",
-                        "on-tertiary": "#ffffff",
-                        "error": "#ba1a1a",
-                        "primary": "#964900",
-                        "on-tertiary-fixed": "#141c24",
-                        "secondary-fixed": "#b8f568",
-                        "tertiary-fixed-dim": "#bfc7d2",
-                        "on-error-container": "#93000a",
-                        "error-container": "#ffdad6",
-                        "outline": "#8a7264",
-                        "surface": "#fbf9f8",
-                        "secondary-container": "#b8f568",
-                        "tertiary-fixed": "#dbe3ef",
-                        "primary-fixed": "#ffdcc6",
-                        "on-primary-container": "#5b2a00",
-                        "inverse-surface": "#303031",
-                        "surface-dim": "#dbdad9",
-                        "primary-fixed-dim": "#ffb786",
-                        "inverse-on-surface": "#f2f0f0",
-                        "background": "#fbf9f8",
-                        "on-tertiary-fixed-variant": "#3f4851",
-                        "inverse-primary": "#ffb786"
-                    },
-                    fontFamily: {
-                        "headline": ["Space Grotesk"],
-                        "body": ["Inter"],
-                        "label": ["Inter"]
-                    },
-                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
-<style>
     body {
-      min-height: max(884px, 100dvh);
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      overflow-x: hidden;
+    }
+
+    .wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .spacer {
+      height: 20vh;
+    }
+
+    .panel {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+    }
+
+    .card {
+      width: min(1100px, 90%);
+      min-height: 80vh;
+      border-radius: 28px;
+      padding: 50px;
+      color: white;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transform: translateY(80px) scale(0.96);
+      opacity: 0.7;
+      transition: transform 0.8s ease, opacity 0.8s ease;
+      will-change: transform, opacity;
+    }
+
+    .panel.active .card {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .about .card {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      z-index: 1;
+    }
+
+    .services .card {
+      background: linear-gradient(135deg, #065f46, #10b981);
+      z-index: 2;
+    }
+
+    .gallery .card {
+      background: linear-gradient(135deg, #7c2d12, #f97316);
+      z-index: 3;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      max-width: 700px;
+    }
+
+    .gallery-grid {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      width: 100%;
+    }
+
+    .gallery-item {
+      height: 150px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        padding: 30px 20px;
+        min-height: 75vh;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      p {
+        font-size: 1rem;
+      }
     }
   </style>
-  </head>
-<body class="bg-surface text-on-surface">
-<!-- TopAppBar Shell -->
-<header class="fixed top-0 w-full z-50 bg-[#fbf9f8]/80 backdrop-blur-md flex justify-between items-center px-6 h-16 transition-all duration-300 ease-in-out">
-<div class="flex items-center gap-4">
-<button class="p-2 hover:bg-stone-200/50 rounded-full transition-all">
-<span class="material-symbols-outlined text-stone-900" data-icon="menu">menu</span>
-</button>
-<span class="text-xl font-bold tracking-tighter text-stone-900 font-headline">Trinergy</span>
-</div>
-<div class="flex items-center">
-<button class="p-2 hover:bg-stone-200/50 rounded-full transition-all">
-<span class="material-symbols-outlined text-orange-700" data-icon="account_circle">account_circle</span>
-</button>
-</div>
-</header>
-<!-- Main Content Canvas -->
-<main class="pt-16 pb-20 overflow-x-hidden">
-<!-- Hero Section -->
-<section class="relative px-6 pt-12 pb-24 overflow-hidden">
-<div class="absolute -right-20 -top-20 w-64 h-64 bg-primary-container/20 rounded-full blur-3xl"></div>
-<div class="relative z-10">
-<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-full mb-6">
-<span class="w-2 h-2 bg-secondary rounded-full"></span>
-<span class="text-[10px] uppercase tracking-[0.1em] font-semibold text-on-surface-variant">The Future is Solar</span>
-</div>
-<h1 class="text-[3.5rem] leading-[1.1] font-bold tracking-tight font-headline mb-6">
-                    Captured.<br/>Harnessed.<br/><span class="text-primary">Empowered.</span>
-</h1>
-<p class="text-lg text-on-surface-variant leading-relaxed mb-8 max-w-[85%]">
-                    Precision-engineered solar solutions for a sustainable Karachi. Architecting energy independence since 2022.
-                </p>
-<div class="flex flex-col gap-4">
-<button class="w-full py-4 bg-gradient-to-r from-primary to-primary-container text-on-primary rounded-xl font-semibold title-sm flex items-center justify-center gap-2">
-                        Get Started
-                        <span class="material-symbols-outlined text-sm" data-icon="arrow_forward">arrow_forward</span>
-</button>
-<button class="w-full py-4 bg-secondary-container text-on-secondary-container rounded-xl font-semibold title-sm">
-                        Calculate Savings
-                    </button>
-</div>
-</div>
-<div class="mt-16 relative rounded-2xl overflow-hidden aspect-[4/5] bg-surface-container-low shadow-2xl shadow-stone-900/10">
-<img alt="Solar Panels" class="w-full h-full object-cover" data-alt="Modern rooftop solar panel installation under a clear blue sky with sleek architectural lines and soft sunlight reflections" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmclKC1Rdw-jTEYLOpfQ3WF7td6JcouZcKLY9NqcKpyD65nJufd1_Tvrxrpt6-AG9NTkpccnp_AB2AiSkCrsaDPyfvIp9s-2Or_Kmf4rbVhstbvTeawfNrqPU9BuQlcsyB0GtADEXlF1nywXM4JtV5TP6Z1OUlWD7ZPEr0zs2cWNBqe0F_P-s44tQ3oTIfxfUyupwo-XUmGZ9GtqwW4yZiwsIxtQOXy9BDYWY-QiYzvbzwvY0Q1Ks6CFU8TcVcMCQdEh4fK6Boys1n"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-<div class="absolute bottom-6 left-6 right-6 p-4 backdrop-blur-md bg-white/10 rounded-xl border border-white/20">
-<div class="text-white">
-<span class="block text-xs uppercase tracking-widest opacity-80 mb-1">Active Installation</span>
-<span class="font-headline font-bold text-lg">Karachi Defense Project</span>
-</div>
-</div>
-</div>
-</section>
-<!-- About Us Section -->
-<section class="bg-surface-container-low px-6 py-20">
-<div class="max-w-sm">
-<h2 class="text-3xl font-bold font-headline mb-6">Built in Karachi,<br/>Designed for the Future</h2>
-<div class="space-y-6 text-on-surface-variant leading-relaxed">
-<p>Founded in <span class="font-bold text-on-surface">2022</span>, Trinergy Solar Solutions emerged from a vision to revolutionize Pakistan's energy landscape through technical precision and architectural elegance.</p>
-<p>We aren't just installers; we are energy architects. Our team combines engineering excellence with localized expertise to navigate the unique environmental demands of the Karachi coast.</p>
-</div>
-<div class="grid grid-cols-2 gap-4 mt-10">
-<div class="p-4 bg-surface-container-lowest rounded-xl">
-<span class="block text-3xl font-bold text-primary font-headline mb-1">500+</span>
-<span class="text-xs uppercase tracking-wider font-semibold text-stone-500">Homes Powered</span>
-</div>
-<div class="p-4 bg-surface-container-lowest rounded-xl">
-<span class="block text-3xl font-bold text-secondary font-headline mb-1">98%</span>
-<span class="text-xs uppercase tracking-wider font-semibold text-stone-500">Efficiency Rate</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Core Services - Bento Style -->
-<section class="px-6 py-20">
-<h2 class="text-sm uppercase tracking-[0.2em] font-bold text-secondary mb-4">Core Expertise</h2>
-<h3 class="text-3xl font-bold font-headline mb-10">Comprehensive Solar Architecture</h3>
-<div class="grid grid-cols-1 gap-6">
-<!-- Service 1 -->
-<div class="bg-surface-container-lowest p-8 rounded-2xl relative overflow-hidden group">
-<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
-<span class="material-symbols-outlined text-9xl" data-icon="solar_power">solar_power</span>
-</div>
-<div class="w-12 h-12 bg-primary-container/20 rounded-lg flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-primary" data-icon="solar_power">solar_power</span>
-</div>
-<h4 class="text-xl font-bold font-headline mb-3">Solar Trading</h4>
-<p class="text-sm text-on-surface-variant leading-relaxed">Sourcing Tier-1 photovoltaic components from global leaders to ensure maximum yield and longevity.</p>
-</div>
-<!-- Service 2 -->
-<div class="bg-surface-container-highest p-8 rounded-2xl relative overflow-hidden group">
-<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
-<span class="material-symbols-outlined text-9xl" data-icon="bolt">bolt</span>
-</div>
-<div class="w-12 h-12 bg-secondary-container flex items-center justify-center rounded-lg mb-6">
-<span class="material-symbols-outlined text-on-secondary-container" data-icon="bolt">bolt</span>
-</div>
-<h4 class="text-xl font-bold font-headline mb-3">Precision Installation</h4>
-<p class="text-sm text-on-surface-variant leading-relaxed">Turnkey deployment executed by certified engineers with a focus on aesthetic integration.</p>
-</div>
-<!-- Service 3 -->
-<div class="bg-surface-container-lowest p-8 rounded-2xl relative overflow-hidden group">
-<div class="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity">
-<span class="material-symbols-outlined text-9xl" data-icon="support_agent">support_agent</span>
-</div>
-<div class="w-12 h-12 bg-stone-200 rounded-lg flex items-center justify-center mb-6">
-<span class="material-symbols-outlined text-stone-600" data-icon="support_agent">support_agent</span>
-</div>
-<h4 class="text-xl font-bold font-headline mb-3">Lifetime Services</h4>
-<p class="text-sm text-on-surface-variant leading-relaxed">Proactive monitoring, maintenance, and panel cleaning to maintain peak performance year-round.</p>
-</div>
-</div>
-</section>
-<!-- Project Gallery -->
-<section class="bg-stone-900 py-20 px-6">
-<div class="flex justify-between items-end mb-10">
-<div>
-<h2 class="text-orange-500 uppercase tracking-widest text-xs font-bold mb-2">Our Portfolio</h2>
-<h3 class="text-3xl font-bold font-headline text-white">Project Gallery</h3>
-</div>
-<button class="text-orange-500 text-sm font-semibold underline underline-offset-8">View All</button>
-</div>
-<div class="grid grid-cols-2 gap-3">
-<div class="aspect-square rounded-lg overflow-hidden relative">
-<img alt="Project 1" class="w-full h-full object-cover" data-alt="Sleek modern residence with integrated solar tiles on the roof, surrounded by minimalist landscaping at dusk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbaIaDh0W5TIYjFWP-a0gLbNZunm64692p07YPLJrMV-EToQlcnCv0qNSu0G7Qw4Lk89LCNS3utdVM7glRtN3joWaQ4bgOzh_JwkJ8p1oraqv2fNk9O4hmiKq5747hmLZ2mOCDjv7PHT_hGv2Mg_qQ1_vx18TGMn8s9mDdJ2atfX6VMOxt_6VXvh5P8b0I145EtXQIUuzXSX1_aWnc-g2qXT81OIMdO2gF_OJhLFKthCAJdi41BQhHZEVLkKTT8Cvm7Goz0AimF6r9"/>
-</div>
-<div class="aspect-square rounded-lg overflow-hidden relative">
-<img alt="Project 2" class="w-full h-full object-cover" data-alt="Close-up of a high-tech solar inverter and battery storage system in a clean, modern utility room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-R2cWleKz0PKVvDdezEYe5n0BUf6Ia-JXAshTs_w4Mq0eaQZjuAqihi8ESDTsJLkExV8JYXkdPvEvkYAUgTNUjFvoWo_18o5a90MHaU8HX4dudyBKQiDIggJrc3vUzyhmt7sjzoqRgyYIzqPrla0kxLAv3fqQYyX2NLIra4f6FBx8QCmbT-Mip5y_LrtACa5D5F80ZDbw6838cRB3mxtb2HIjIveFdmh_GzfT3QG1sCk2GOMCBrfUVu6mMSUSoKv2cjsDKtfycuEU"/>
-</div>
-<div class="col-span-2 aspect-[16/9] rounded-lg overflow-hidden relative">
-<img alt="Project 3" class="w-full h-full object-cover" data-alt="Wide aerial shot of a commercial solar farm on a corporate building in an urban setting with bright sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_IYy8Bi-ruSybai3bvLA1Q5sypXw1_GrHLz5VlhQ1B8vI1n42DeVqaOqgh89Wb8h5uaOPIhn9kJsSHvN6HcUYfxIdgp545k4acpWkZ5gBqROUEsDp6sezc3niXzf14kMDtUlzo-3-u9d5BnS8w90vkXTxlwwFPYhhYa1fmWAgQtRVN4R49o_LmPTZd5f8wZv0_e9-YzXXzjbKYBsu_XowzOeJZ5view2tF3VQ1BkSFDZKeYOQA_5ZojnlIKaPpXhZg_HwNrCOgBzM"/>
-<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
-<span class="text-white text-xs font-medium">Clifton Commercial Hub | 450kW System</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Why Choose Us -->
-<section class="px-6 py-20">
-<h2 class="text-3xl font-bold font-headline mb-10 text-center">The Trinergy Edge</h2>
-<div class="space-y-8">
-<div class="flex gap-4">
-<div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary text-sm" data-icon="verified" style="font-variation-settings: 'FILL' 1;">verified</span>
-</div>
-<div>
-<h4 class="font-bold mb-1">Tier-1 Components Only</h4>
-<p class="text-sm text-on-surface-variant">We exclusively use premium Bloomberg-rated panels and European inverters for reliability.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary text-sm" data-icon="architecture" style="font-variation-settings: 'FILL' 1;">architecture</span>
-</div>
-<div>
-<h4 class="font-bold mb-1">Custom Structural Engineering</h4>
-<p class="text-sm text-on-surface-variant">Every mount is custom-designed to withstand Karachi's high coastal wind speeds.</p>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="flex-shrink-0 w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary text-sm" data-icon="monitoring" style="font-variation-settings: 'FILL' 1;">monitoring</span>
-</div>
-<div>
-<h4 class="font-bold mb-1">24/7 Digital Monitoring</h4>
-<p class="text-sm text-on-surface-variant">Access your energy production data in real-time through our proprietary dashboard.</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Contact Form -->
-<section class="bg-surface-container px-6 py-20 rounded-t-[2.5rem]">
-<h2 class="text-3xl font-bold font-headline mb-4">Start Your Transition</h2>
-<p class="text-on-surface-variant mb-10">Request a custom architectural energy assessment today.</p>
-<form class="space-y-4">
-<div class="space-y-1">
-<label class="text-[10px] uppercase tracking-widest font-bold text-stone-500 ml-1">Full Name</label>
-<input class="w-full bg-surface-container-high border-none rounded-lg p-4 focus:ring-2 focus:ring-primary focus:bg-white transition-all outline-none" placeholder="Enter your name" type="text"/>
-</div>
-<div class="space-y-1">
-<label class="text-[10px] uppercase tracking-widest font-bold text-stone-500 ml-1">Email Address</label>
-<input class="w-full bg-surface-container-high border-none rounded-lg p-4 focus:ring-2 focus:ring-primary focus:bg-white transition-all outline-none" placeholder="name@example.com" type="email"/>
-</div>
-<div class="space-y-1">
-<label class="text-[10px] uppercase tracking-widest font-bold text-stone-500 ml-1">Your Requirements</label>
-<textarea class="w-full bg-surface-container-high border-none rounded-lg p-4 focus:ring-2 focus:ring-primary focus:bg-white transition-all outline-none" placeholder="Tell us about your project..." rows="4"></textarea>
-</div>
-<button class="w-full py-5 mt-4 bg-primary text-on-primary rounded-xl font-bold tracking-wide shadow-lg shadow-primary/20" type="submit">
-                    Send Inquiry
-                </button>
-</form>
-</section>
-<!-- Footer -->
-<footer class="w-full mt-auto py-12 px-6 flex flex-col items-center text-center space-y-8 bg-stone-100">
-<span class="font-headline font-bold text-stone-800 text-xl tracking-tighter">Trinergy</span>
-<p class="font-body text-xs leading-relaxed text-stone-500">© 2026 Trinergy Solar Solutions. Architecting the future of energy.</p>
-<div class="flex gap-6">
-<a class="text-stone-500 hover:text-green-600 transition-colors text-xs font-medium" href="#">Privacy Policy</a>
-<a class="text-stone-500 hover:text-green-600 transition-colors text-xs font-medium" href="#">Terms of Service</a>
-</div>
-<div class="pt-4 border-t border-stone-200 w-full flex justify-center gap-4">
-<div class="w-8 h-8 rounded-full bg-stone-200 flex items-center justify-center">
-<span class="material-symbols-outlined text-sm" data-icon="share">share</span>
-</div>
-<div class="w-8 h-8 rounded-full bg-stone-200 flex items-center justify-center">
-<span class="material-symbols-outlined text-sm" data-icon="language">language</span>
-</div>
-</div>
-</footer>
-</main>
-<!-- BottomNavBar Shell -->
-<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-[#fbf9f8]/90 backdrop-blur-lg rounded-t-2xl shadow-[0_-4px_24px_rgba(0,0,0,0.04)]">
-<button class="flex flex-col items-center justify-center text-orange-700 font-semibold active:scale-95 transition-transform">
-<span class="material-symbols-outlined mb-1" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
-<span class="font-body text-[10px] uppercase tracking-widest">Home</span>
-</button>
-<button class="flex flex-col items-center justify-center text-stone-500 hover:text-orange-600 active:scale-95 transition-transform">
-<span class="material-symbols-outlined mb-1" data-icon="analytics">analytics</span>
-<span class="font-body text-[10px] uppercase tracking-widest">Analyze</span>
-</button>
-<button class="flex flex-col items-center justify-center text-stone-500 hover:text-orange-600 active:scale-95 transition-transform">
-<span class="material-symbols-outlined mb-1" data-icon="grid_view">grid_view</span>
-<span class="font-body text-[10px] uppercase tracking-widest">Projects</span>
-</button>
-<button class="flex flex-col items-center justify-center text-stone-500 hover:text-orange-600 active:scale-95 transition-transform">
-<span class="material-symbols-outlined mb-1" data-icon="mail">mail</span>
-<span class="font-body text-[10px] uppercase tracking-widest">Contact</span>
-</button>
-</nav>
-</body></html>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="spacer"></div>
+
+    <section class="panel about">
+      <div class="card">
+        <h1>About Us</h1>
+        <p>
+          We create modern digital experiences with smooth animation and clean UI.
+          When you scroll, this section stays visible first, then moves visually behind
+          the next section as the new card slides up from the bottom.
+        </p>
+      </div>
+    </section>
+
+    <section class="panel services">
+      <div class="card">
+        <h1>Services</h1>
+        <p>
+          Web design, React development, branding, and interactive interfaces.
+          This section overlaps the About section while scrolling, creating a layered
+          stacked-card transition effect.
+        </p>
+      </div>
+    </section>
+
+    <section class="panel gallery">
+      <div class="card">
+        <h1>Gallery</h1>
+        <p>
+          The Gallery card also slides upward and comes on top of the Services card.
+          On reverse scroll, the previous card appears again naturally.
+        </p>
+
+        <div class="gallery-grid">
+          <div class="gallery-item">Image 1</div>
+          <div class="gallery-item">Image 2</div>
+          <div class="gallery-item">Image 3</div>
+          <div class="gallery-item">Image 4</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="spacer"></div>
+  </div>
+
+  <script>
+    const panels = document.querySelectorAll(".panel");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          } else {
+            entry.target.classList.remove("active");
+          }
+        });
+      },
+      {
+        threshold: 0.45,
+      }
+    );
+
+    panels.forEach((panel) => observer.observe(panel));
+  </script>
+</body>
+</html>
