@@ -119,7 +119,7 @@ const socials = [
   },
 ];
 
-const formSubmitEmail = "touqeershah32@gmail.com";
+const formSubmitEmail = "Razzak.qureshi@gmail.com";
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -737,6 +737,11 @@ function App() {
                     <input name="email" type="email" placeholder="Enter your email" required />
                   </label>
                 </div>
+
+                <label>
+                  <span>Contact Number</span>
+                  <input name="phone" type="tel" placeholder="Enter your contact number" required />
+                </label>
 
                 <label>
                   <span>Service Required</span>
