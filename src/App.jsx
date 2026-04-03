@@ -162,31 +162,44 @@ function App() {
       .map((item) => document.querySelector(item.href))
       .filter(Boolean);
 
-    const sectionObserver = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (visibleEntry?.target?.id) {
-          setActiveSection(`#${visibleEntry.target.id}`);
-        }
-      },
-      {
-        threshold: 0.35,
-        rootMargin: "-18% 0px -45%",
-      },
-    );
-
     const handleHashChange = () => {
       setActiveSection(window.location.hash || "#home");
     };
 
-    sections.forEach((section) => sectionObserver.observe(section));
+    const updateActiveSection = () => {
+      const headerOffset = window.innerWidth <= 980 ? 102 : 118;
+      const markerLine = headerOffset + 28;
+
+      let currentSection = sections[0];
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+
+        if (rect.top <= markerLine) {
+          currentSection = section;
+        }
+      });
+
+      const nearPageBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 24;
+
+      if (nearPageBottom) {
+        currentSection = sections[sections.length - 1];
+      }
+
+      if (currentSection?.id) {
+        setActiveSection(`#${currentSection.id}`);
+      }
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
     window.addEventListener("hashchange", handleHashChange);
 
     return () => {
-      sectionObserver.disconnect();
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
       window.removeEventListener("hashchange", handleHashChange);
     };
   }, []);
@@ -401,7 +414,7 @@ function App() {
                 <div className="about-mobile-flip-stack" aria-label="About highlights">
                   <article
                     key={`${activeAboutIndex}-${aboutHighlights[activeAboutIndex].title}`}
-                    className={`about-mobile-flip-card${
+                    className={`about-mobile-flip-card mobile-slide-card${
                       aboutHighlights[activeAboutIndex].metric
                         ? " about-mobile-flip-card-metric"
                         : ""
@@ -472,7 +485,10 @@ function App() {
                 data-reveal="up"
                 style={{ "--reveal-delay": "180ms" }}
               >
-                <article className={`mobile-service-card service-theme-${activeServiceIndex}`}>
+                <article
+                  key={`${activeServiceIndex}-${services[activeServiceIndex].title}`}
+                  className={`mobile-service-card mobile-slide-card service-theme-${activeServiceIndex}`}
+                >
                   <div className="mobile-service-card-top">
                     <div className="service-icon">{services[activeServiceIndex].icon}</div>
                   </div>
@@ -537,7 +553,8 @@ function App() {
                 style={{ "--reveal-delay": "120ms" }}
               >
                 <button
-                  className="mobile-gallery-card"
+                  key={`${activeProjectIndex}-${projects[activeProjectIndex].title}`}
+                  className="mobile-gallery-card mobile-slide-card"
                   type="button"
                   onClick={showNextProject}
                   aria-label="Show next project"
